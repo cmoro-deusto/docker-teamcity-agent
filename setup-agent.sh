@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-export JAVA_HOME=/usr/java/default
 AGENT_DIR="${HOME}/agent"
 
 if [ -z "$TEAMCITY_SERVER" ]; then
