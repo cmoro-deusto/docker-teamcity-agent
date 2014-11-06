@@ -19,8 +19,14 @@ RUN \
 
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
-RUN adduser teamcity
+RUN groupadd teamcity
+RUN useradd teamcity -m -g teamcity -s /bin/bash
+RUN passwd -d -u teamcity
+RUN echo "teamcity ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/teamcity
+RUN chmod 0440 /etc/sudoers.d/teamcity
 
 
 EXPOSE 9090
+USER teamcity
+WORKDIR /home/teamcity
 CMD sudo -u teamcity -s -- sh -c "TEAMCITY_SERVER=$TEAMCITY_SERVER bash /setup-agent.sh run"
